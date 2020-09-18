@@ -1,0 +1,10 @@
+
+.person-data{
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #817d7d66;
+    padding: 10px;
+}
+.has-residents{
+cursor: pointer;
+}
