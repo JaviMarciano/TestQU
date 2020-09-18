@@ -4,7 +4,7 @@
 			<section class="body">
 				<div class="container">
 					<h5 class="mb-3">
-						Click on the headers in order to sort displayed planets, paginated
+						Click on the headers in order to sort displayed planets, paged
 						result should be sorted in backend
 					</h5>
 					<table class="table table-bordered">
