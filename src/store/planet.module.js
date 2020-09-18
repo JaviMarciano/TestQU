@@ -3,6 +3,18 @@ import { FETCH_PLANETS, SORT_PLANETS } from "./actions.type";
 import { SET_PLANETS, SET_ERROR, SET_SORTED_PLANETS } from "./mutations.type";
 import { SortType } from "@/common/config";
 
+const sortString = (a, b, sortKey) => {
+	let compare = 0;	
+	if (a[sortKey] > b[sortKey]) {
+		compare = 1;
+	} else if (b[sortKey] > a[sortKey]) {
+		compare = -1;
+	}
+	return compare;
+};
+
+const sortNumber = (a, b, sortKey) => a[sortKey] - b[sortKey];
+
 const state = {
 	errors: null,
 	planets: [],
@@ -25,16 +37,9 @@ const actions = {
 	},
 	[SORT_PLANETS](context, params) {
 		const planets = state.planets;
-		planets.sort((a, b) => {
-			let compare = 0;
-			if (params.sortType == SortType.number) return  a[params.sortKey] - b[params.sortKey];		
-			if (a[params.sortKey] > b[params.sortKey]) {
-				compare = 1;
-			} else if (b[params.sortKey] > a[params.sortKey]) {
-				compare = -1;
-			}
-			return compare;
-		});
+		planets.sort((a, b) => (params.sortType == SortType.number) 
+			? sortNumber(a, b, params.sortKey)
+			: sortString (a, b, params.sortKey));
 		context.commit(SET_SORTED_PLANETS, planets);
 	},
 };
