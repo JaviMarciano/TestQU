@@ -4,15 +4,15 @@
 			<section class="body">
 				<div class="container">
 
-					<h3 class="m-2">click on the headers in order to sort displayed planets, paginated result should be sorted on backend</h3>
+					<h5 class="mb-3">Click on the headers in order to sort displayed planets, paginated result should be sorted in backend</h5>
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th @click="sort('name')">Name</th>
-								<th @click="sort('rotation_period')">Rotation Period</th>
-								<th @click="sort('orbital_period')">Orbital Period</th>
-								<th @click="sort('diameter')">Diameter</th>
-								<th @click="sort('climate')">Climate</th>
+								<th @click="sort('name')"><i class="fa fa-fw fa-sort"></i>Name</th>
+								<th @click="sort('rotation_period')"><i class="fa fa-fw fa-sort"></i>Rotation Period</th>
+								<th @click="sort('orbital_period')"><i class="fa fa-fw fa-sort"></i>Orbital Period</th>
+								<th @click="sort('diameter')"><i class="fa fa-fw fa-sort"></i>Diameter</th>
+								<th @click="sort('climate')"><i class="fa fa-fw fa-sort"></i>Climate</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -34,7 +34,7 @@
 							<tr>
 								<td colspan="5" style="text-align: center;">
 									<nav>
-										<ul class="pagination">
+										<ul class="pagination d-flex justify-content-center">
 											<li class="page-item" v-show="previous">
 												<a class="page-link" href="#" aria-label="Previous">
 													<span aria-hidden="true">&laquo;</span>
@@ -61,8 +61,9 @@
 							</tr>
 						</tfoot>
 					</table>
+					<h5 v-show="residents.length > 0">Residents:</h5>
 					<ul>
-						<li v-for="(resident, index) in residents" :key="index" class="person-data">
+						<li v-for="(resident, index) in residents" :key="index" class="person-data mr-3 mb-3">
 							<Person :resident="resident"></Person>
 						</li>
 					</ul>
