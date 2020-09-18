@@ -15,7 +15,7 @@ const actions = {
 		return new Promise(() => {
 			ApiService.get(`planets?page=${page}`)
 				.then((response) => {
-					context.commit(SET_PLANETS, response.data);					
+					context.commit(SET_PLANETS, response.data);
 				})
 				.catch(({ response }) => {
 					context.commit(SET_ERROR, response.data.errors);
@@ -23,9 +23,13 @@ const actions = {
 		});
 	},
 	[SORT_PLANETS](context, sortKey) {
-    const planets = state.planets;
+		const planets = state.planets;
 		planets.sort((a, b) => {
-      let compare = 0;
+			let compare = 0;
+			let first = a[sortKey];
+			let second = b[sortKey];
+			var type = isNaN(first) ? 'string' : 'number';
+			if (type === 'number') return  first - second;		
 			if (a[sortKey] > b[sortKey]) {
 				compare = 1;
 			} else if (b[sortKey] > a[sortKey]) {
@@ -47,9 +51,9 @@ const mutations = {
 		state.next = planets.next;
 		state.count = planets.count / planets.results.length;
 		state.errors = {};
-  },
-  [SET_SORTED_PLANETS](state, planets) {
-		state.planets = planets;	
+	},
+	[SET_SORTED_PLANETS](state, planets) {
+		state.planets = planets;
 	},
 };
 

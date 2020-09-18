@@ -3,16 +3,28 @@
 		<div class="wrapper">
 			<section class="body">
 				<div class="container">
-
-					<h5 class="mb-3">Click on the headers in order to sort displayed planets, paginated result should be sorted in backend</h5>
+					<h5 class="mb-3">
+						Click on the headers in order to sort displayed planets, paginated
+						result should be sorted in backend
+					</h5>
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th @click="sort('name')"><i class="fa fa-fw fa-sort"></i>Name</th>
-								<th @click="sort('rotation_period')"><i class="fa fa-fw fa-sort"></i>Rotation Period</th>
-								<th @click="sort('orbital_period')"><i class="fa fa-fw fa-sort"></i>Orbital Period</th>
-								<th @click="sort('diameter')"><i class="fa fa-fw fa-sort"></i>Diameter</th>
-								<th @click="sort('climate')"><i class="fa fa-fw fa-sort"></i>Climate</th>
+								<th @click="sort('name')">
+									<i class="fa fa-fw fa-sort"></i>Name
+								</th>
+								<th @click="sort('rotation_period')">
+									<i class="fa fa-fw fa-sort"></i>Rotation Period
+								</th>
+								<th @click="sort('orbital_period')">
+									<i class="fa fa-fw fa-sort"></i>Orbital Period
+								</th>
+								<th @click="sort('diameter')">
+									<i class="fa fa-fw fa-sort"></i>Diameter
+								</th>
+								<th @click="sort('climate')">
+									<i class="fa fa-fw fa-sort"></i>Climate
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -20,7 +32,7 @@
 								class="player-block"
 								v-for="(planet, index) in planets"
 								:key="index"
-								@click="getPerson(planet.residents)"
+								@click="getPerson(planet.residents, planet.name)"
 								:class="planet.residents.length > 0 ? 'has-residents' : ''"
 							>
 								<td>{{ planet.name }}</td>
@@ -61,9 +73,15 @@
 							</tr>
 						</tfoot>
 					</table>
-					<h5 v-show="residents.length > 0">Residents:</h5>
+					<h5 v-show="residents.length > 0">
+						Residents <b>({{ selectedPlanet }})</b>:
+					</h5>
 					<ul>
-						<li v-for="(resident, index) in residents" :key="index" class="person-data mr-3 mb-3">
+						<li
+							v-for="(resident, index) in residents"
+							:key="index"
+							class="person-data mr-3 mb-3"
+						>
 							<Person :resident="resident"></Person>
 						</li>
 					</ul>
@@ -75,10 +93,7 @@
 
 <script>
 import { mapState } from "vuex";
-import {
-	FETCH_PLANETS,
-	SORT_PLANETS,
-} from "@/store/actions.type";
+import { FETCH_PLANETS, SORT_PLANETS } from "@/store/actions.type";
 import Person from "@/components/person";
 
 export default {
@@ -86,6 +101,7 @@ export default {
 	data() {
 		return {
 			page: 1,
+			selectedPlanet: "",
 			residents: [],
 		};
 	},
@@ -99,8 +115,9 @@ export default {
 		sort(sortKey) {
 			this.$store.dispatch(SORT_PLANETS, sortKey);
 		},
-		getPerson(residents) {
-			this.residents = residents;			
+		getPerson(residents, selectedPlanet) {
+			this.selectedPlanet = selectedPlanet;
+			this.residents = residents;
 		},
 	},
 	mounted() {
