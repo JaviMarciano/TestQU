@@ -10,19 +10,19 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th @click="sort('name')">
+								<th @click="sort('name', stringColumn)">
 									<i class="fa fa-fw fa-sort"></i>Name
 								</th>
-								<th @click="sort('rotation_period')">
+								<th @click="sort('rotation_period', numberColumn)">
 									<i class="fa fa-fw fa-sort"></i>Rotation Period
 								</th>
-								<th @click="sort('orbital_period')">
+								<th @click="sort('orbital_period', numberColumn)">
 									<i class="fa fa-fw fa-sort"></i>Orbital Period
 								</th>
-								<th @click="sort('diameter')">
+								<th @click="sort('diameter', numberColumn)">
 									<i class="fa fa-fw fa-sort"></i>Diameter
 								</th>
-								<th @click="sort('climate')">
+								<th @click="sort('climate', stringColumn)">
 									<i class="fa fa-fw fa-sort"></i>Climate
 								</th>
 							</tr>
@@ -95,6 +95,7 @@
 import { mapState } from "vuex";
 import { FETCH_PLANETS, SORT_PLANETS } from "@/store/actions.type";
 import Person from "@/components/person";
+import { SortType } from "@/common/config";
 
 export default {
 	name: "Planets",
@@ -103,6 +104,8 @@ export default {
 			page: 1,
 			selectedPlanet: "",
 			residents: [],
+			numberColumn: SortType.number,
+			stringColumn: SortType.string,
 		};
 	},
 	components: {
@@ -112,8 +115,8 @@ export default {
 		getPage(page) {
 			this.$store.dispatch(FETCH_PLANETS, page);
 		},
-		sort(sortKey) {
-			this.$store.dispatch(SORT_PLANETS, sortKey);
+		sort(sortKey, sortType) {
+			this.$store.dispatch(SORT_PLANETS, { sortKey, sortType });
 		},
 		getPerson(residents, selectedPlanet) {
 			this.selectedPlanet = selectedPlanet;

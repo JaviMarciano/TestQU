@@ -1,6 +1,7 @@
 import ApiService from "../common/api.service";
 import { FETCH_PLANETS, SORT_PLANETS } from "./actions.type";
 import { SET_PLANETS, SET_ERROR, SET_SORTED_PLANETS } from "./mutations.type";
+import { SortType } from "@/common/config";
 
 const state = {
 	errors: null,
@@ -22,17 +23,14 @@ const actions = {
 				});
 		});
 	},
-	[SORT_PLANETS](context, sortKey) {
+	[SORT_PLANETS](context, params) {
 		const planets = state.planets;
 		planets.sort((a, b) => {
 			let compare = 0;
-			let first = a[sortKey];
-			let second = b[sortKey];
-			var type = isNaN(first) ? 'string' : 'number';
-			if (type === 'number') return  first - second;		
-			if (a[sortKey] > b[sortKey]) {
+			if (params.sortType == SortType.number) return  a[params.sortKey] - b[params.sortKey];		
+			if (a[params.sortKey] > b[params.sortKey]) {
 				compare = 1;
-			} else if (b[sortKey] > a[sortKey]) {
+			} else if (b[params.sortKey] > a[params.sortKey]) {
 				compare = -1;
 			}
 			return compare;
